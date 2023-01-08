@@ -1,0 +1,36 @@
+.header-container{
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid black;
+}
+
+.logo{
+    width: 100px;
+}
+
+.nav-item > ul {
+    display: flex;
+    
+}
+
+.nav-item > ul > li {
+    list-style: none;
+    padding: 10px;
+}
+
+.card{
+    width: 200px;
+    border: 1px solid black;
+    padding: 10px;
+    margin: 10px;
+}
+
+.card > img {
+    width: 100%;
+}
+
+.resturant-list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
