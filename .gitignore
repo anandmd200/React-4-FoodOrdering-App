@@ -1,5 +1,6 @@
 
 # See http://help.github.com/ignore-files/ for more about ignoring files.
+#https://stackoverflow.com/questions/24114676/git-error-failed-to-push-some-refs-to-remote
 
 node_modules/
 dist/
