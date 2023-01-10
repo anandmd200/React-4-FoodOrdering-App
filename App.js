@@ -1012,16 +1012,14 @@ const image_CDN = "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_aut
 
 
 const RestaurantCard = ({cloudinaryImageId,name,costForTwoString,cuisines,avgRating}) => {
-  console.log(cloudinaryImageId);
   // const {cloudinaryImageId,name,costForTwoString,cuisines,avgRating} = restaurant.data;
   return (
     <div className="card">
       <img src={image_CDN + cloudinaryImageId} alt="Card Image" />
       <h1>{name}</h1>
-      {/* 
-      <h3>{costForTwoString}</h3> */}
-      {/* <h4>{cuisines.join(", ")}</h4> */}
-      {/* <h2>{avgRating}</h2> */}
+      <h3>{costForTwoString}</h3>
+      <h4>{cuisines.join(", ")}</h4>
+      <h2>{avgRating}</h2>
     </div>
   );
 };
@@ -1029,12 +1027,11 @@ const RestaurantCard = ({cloudinaryImageId,name,costForTwoString,cuisines,avgRat
 const Body = () => {
   return (
     <div className="resturant-list">
-      <RestaurantCard cloudinaryImageId={restaurantList[0].data.cloudinaryImageId} name={restaurantList[0].data.name} />
-      <RestaurantCard cloudinaryImageId={restaurantList[1].data.cloudinaryImageId} name={restaurantList[0].data.name} />
-      <RestaurantCard cloudinaryImageId={restaurantList[2].data.cloudinaryImageId} name={restaurantList[0].data.name} />
-      <RestaurantCard cloudinaryImageId={restaurantList[3].data.cloudinaryImageId} name={restaurantList[0].data.name} />
-      <RestaurantCard cloudinaryImageId={restaurantList[4].data.cloudinaryImageId} name={restaurantList[0].data.name} />
-      <RestaurantCard cloudinaryImageId={restaurantList[5].data.cloudinaryImageId} name={restaurantList[0].data.name} />
+      {
+        restaurantList.map(Element =>{
+          return <RestaurantCard {...Element.data} key={Element.data.id}/>
+        })
+      }
     </div>
   );
 };
