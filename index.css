@@ -35,3 +35,7 @@
     flex-wrap: wrap;
     justify-content: center;
 }
+
+.search-container{
+    margin: 10px;
+}

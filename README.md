@@ -1,69 +1,110 @@
-# React-4-FoodOrdering-App
+# React-5-FoodOrdering-App
+### what is difference `Default`, `Named`and `* as` exports?
+In `Default Export`you can export only one component syntax:-
+```
+const Title = () => {
+  return (
+    <a href="/">
+      <h1>Hello React</h1>
+    </a>
+  );
+};
 
-### Config Driven UI? 
-A dynamic UI which is changes based on data known as `config driven` UI. See if people on different location (As food odering App) see different data(UI).Basically, contoling UI by some configuration provided by backend API.
-
-### optional Chaining ?
-
-
-### Define `props` in React?
-Passing arguments inside the component is known as `props`. Props is a short hand of properties inside component. `props` as name is not mandatory it is only good proctice used by the community of developers.
+export default Title; 
+``` 
+```
+import Title from './components/Title'    -> default import
+```
+In `Named Export`you can export only one or multiple component syntax:-
 
 ```
- <RestaurantCard restaurantList={restaurantList[0]} />
+export const Title = () => {
+  return (
+    <a href="/">
+      <h1>Hello React</h1>
+    </a>
+  );
+};
+``` 
+```
+import {Title} from './components/Title'   -> Named Import 
+```
+
+
+In `* as`you can export only one or multiple component syntax:-
 
 ```
-#### Can we pass multiple props? 
-Yes, You can pass.
+export const Title = () => {
+  return (
+    <a href="/">
+      <h1>Hello React</h1>
+    </a>
+  );
+};
+
+export const Header = () => (
+  <div className="header-container">
+    <div className="nav-item">
+      <ul>
+        <li>Home</li>
+        <li>About</li>
+        <li>Contact</li>
+        <li>Cart</li>
+      </ul>
+    </div>
+  </div>
+);
+``` 
+```
+import {Title,Header} from './components/componentName' -> Named Import 
+
+or 
+
+import * as Obj from './components/componentName'
+
+<obj.Title /> <obj.Header />
+```
+
+### what is importance of config.js file?
+
+It's good convention/practice to have `config or constant` file in the app. It containts all the hardCoded things or constant things which will be going to use in the muliple componets so that if any changes occurs in future then you need to make changes only one place.
+
+### What is react Hooks? 
+At the end of the day Hooks are the normal function.We can create our own Hooks.it is written by FB dev and it provides some cool features like `useState`;
 
 ```
-<RestaurantCard restaurantList={restaurantList[0]} neame="Andrew"/>
-```
+import {useState} from "react";
+const [searchText, setSearchText]  = useState('Default value');     // create  state varibale 
 
-### what is spread Operator?
-The spread `(...)` syntax allows an iterable, such as an array or string, to be expanded in places where zero or more arguments (for function calls) or elements (for array literals) are expected.
+or
 
+const searchObj = useState();
+const [searchText, setSearchText] = searchObj;  // object destructuring.
 ```
-function sum(x, y, z) {
-  return x + y + z;
+useState() => returns Array[] in which 
+- Array[0] => local state variable name
+- Array[1] => Function to set and update the value of Array[0] variable.
+
+### why do we need useState Hook?
+Suppose, We don't use the `useState` then react doesn't have the track of when data is modified.
+the useState hooks make sync the variable with the UI and react also have the track when the data is modified. One more thing you can't modify the state varialbe directly you should have to implement the `setVariable` method provided by useState().
+
+### You will not able to write anything inside input type text if you assigned `value=""`?
+Beacuse React support the data binding (2-way & 1-way) concept. You only able to change data if some how you bind data from view to componet and componet to view.
+
+### Note: 
+- React uses the React type variable to bind the data.
+- Every React component maintains the state and you can put your variable into state.
+- For creating a local vriable always use state vaiable. 
+
+### what is event.target.value is? 
+```
+const input1 = document.createElement('input');
+document.body.appendChild(input1);
+input1.value = "hello";
+
+function showData(evt) {
+  console.log(evt.target.value);
 }
-
-const numbers = [1, 2, 3];
-
-console.log(sum(...numbers));
-
-O/P: 6
-
+input1.addEventListener('click', showData);
 ```
-
-### why we use `map` instead of loop?
-`map` is a best way to do functional programming. In industry you will always see map in large scale.
-
-```
- restaurantList.map(Element => <RestaurantCard {...Element.data} />);
-
- or
-
- restaurantList.map(Element =>{
-    return <RestaurantCard {...Element.data} />
- });
-
-```
-
-### Virtual DOM? 
-It is not the only use in React, it is Software Engineering concept. `Virtual Dom` is a same representation of DOM tree in memory and sync with the real DOM using `reconciliation` process.
-`Reconciliation` uses `Diff` algorithm to find diff between trees (Real DOM diff Vrtual Dom) and it determines what portion of UI need to be changed or re-render.
-
-### why we need unique key for element? 
-Because, diff algorithm easily identifiy that which react element was their and which new one come, where it will be placed in dom tree. This is what makes react fast.
-The key only has to be unique among its siblings, not globally unique.
-
-`No key <<<<< Index key << uniques key`
-
-```
-<div> <div> <div> <div>    <-----  new <div>  React confuse (where to place it) 
-
-<div key="1"> <div key="2"> <div key="3"> <div key="4">       <----- new <div key="5"> (easily identify and render it)
-
-```
-
