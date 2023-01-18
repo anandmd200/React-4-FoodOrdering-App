@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const Title = () => {
   return (
     <a href="/">
@@ -10,17 +12,26 @@ const Title = () => {
   );
 };
 
-const Header = () => (
-  <div className="header-container">
-    <Title />
-    <div className="nav-item">
-      <ul>
-        <li>Home</li>
-        <li>About</li>
-        <li>Contact</li>
-        <li>Cart</li>
-      </ul>
+const Header = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  return (
+    <div className="header-container">
+      <Title />
+      <div className="nav-item">
+        <ul>
+          <li>Home</li>
+          <li>About</li>
+          <li>Contact</li>
+          <li>Cart</li>
+        </ul>
+      </div>
+      {isLoggedIn ? (
+        <button onClick={() => setIsLoggedIn(false)}>Log In</button>
+      ) : (
+        <button onClick={() => setIsLoggedIn(true)}>Log Out</button>
+      )}
     </div>
-  </div>
-);
+  );
+};
 export default Header;
