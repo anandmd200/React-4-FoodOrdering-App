@@ -1,6 +1,6 @@
 import { image_CDN } from "../constant";
 
-const RestaurantCard = ({cloudinaryImageId,name,costForTwoString,cuisines,avgRating}) => {
+const RestaurantCard = ({cloudinaryImageId,name,costForTwoString,cuisines}) => {
   return (
     <div className="card">
       <img src={image_CDN + cloudinaryImageId} alt="Card Image" />

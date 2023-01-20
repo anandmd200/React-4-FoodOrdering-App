@@ -1,164 +1,261 @@
-# React-6-FoodOrdering-App
+# React-7-FoodOrdering-App (Routing)
+## React Router DOM 
+It is a very popular plugin which is used for client side routing in react application.
+#### Note:
+- Never create a component. You can compose it if required.
+- Never write useState() inside conditional (if-else statement).Because useState() creates it's own variable if you put state inside if-else react would not know whether the state variable is created or not and it will leads to the inconsistency.
+- Never write useState() inside for loop. Even it would not required in future :)
+- useState() is a hook that react gives you to create local state variable inside component So Never declare useState() outside of your componet.
+- In enterprise App the images kept on CDN in a optimised way because it deleivers the images very fast.
+- don't import packages for small things, Improt when things gets more complecated.
+- `formic` is a pliwhich used to create the complex form like `forms in Finacial Domain or Something else`.
+[formic Create forms without tears](https://formik.org/docs/overview)
 
-### Lecture Note: 
-- The most expennsive operation -> Dom menipulation and react does it very quickly using the concept of VDOM(Reconciliation and Diff Algorithms).
-- BY default the component renders ones but when You made changes in local state variable react re-renders the whole component and keep state sync with UI.
-- `For example`: if you entering the search text it will rerenders whole component on every key press.
+***
+### Can we create more useEffect inside component?
+Yes you can! As per the requirement or usecases.
 
-- fetch(): Is a way of Exploring world in JS and it is provided by the JS engine through window object for making call to the API.
-
-
-### where to call an API? 
-Inside component directly => NOOOO , Because componet renders on every state changes and it call API on every render either by changing the state or props.
-#####
-React provides another hook call useEffect(); to calling the API or any things that requiered execution based on given parameter in side dependency array.
-
-### What is Microservice?
-
-`Microservices` - also known as the microservice architecture - is an architectural style that structures an application as a collection of services that are
-
-- Independently deployable
-- Loosely coupled
-- Organized around business capabilities
-- Owned by a small team
-- Highly maintainable and testable
-
-
-The microservice architecture enables the rapid, frequent and reliable delivery of large, complex applications. It also enables an organization to evolve its technology stack like you can build a application using multiple tecknology like front-end : React and Angular, Backend: different module and services using different backend framework like go, java, Node and you can deploy it even different server with different ports as totally Independent features.
-- example: Backed API is handled by different projet, Using JAVA
-- Generating logs is one more project, Using Python
-- UI is also running and build as independently, Using React
-- Message sending service is managed in different project,by python
-and these all containg small-small services which combinally crates a big APP.   
-#### how these all projects combined?
-These all projects are deplyed on the server with `same domain name` with `different port`:
+***
+### How to setup routes in project explain?
+install router Package: 
 ```
-swiggy.com:3000 - / fromtend
-swiggy.com:4000 - /dpi
-swiggy.com:5000 - /notification 
+npm install react-router-dom
+```
+Now in App.js file:
 
 ```
+import { createBrowserRouter } from "react-router-dom";
 
-### what is Monoloth architecture?
-This is traditional way of developing the application these application use to have every this in single project, like same project contains all UI, message sending feature, nofication feature, data, backend every things which is required to build the application.
-- Problem is deployemt means on-every change (small or big) the new deployment of whole application is required and in this time span the is appears unable for end users.
-- Advantages like we don't need to manage different repositories. Every things is availabe at one place.
+//now need setup some routerconfiguration: 
 
-
-### where this foodApp Lies?
-It lies in Microservices of building UI-Frontend project.
-
-
-### what is the Different between Monolith and Microservice?
-### why do we need a useEffect Hook?
-For calling a API we need something like when the page loads the API is called and the given object is filled with data once or as per requiremt.
-`useEffect()` is a Hook provided by the react which is best and safe place to calling the API.
--  2 ways of calling a API:
-+ As soon As User loads the Page => API(300 ms) => renderPage(200ms) = Delay to end user = (500)ms
-+ As soon As User loads the Page => Render Page (100ms) => API call (300ms) => Upadate the data on UI(100ms) = 500ms 
-
-- but second approach is better then 1st approch because here the user experiance is good the page is availabe in 100ms to end user. and UseEffect is Follows the same approach. 
-
-```
-import {useEffect} from 'react';
-
- useEffect(() => {
-    fetch("https://APi_Url.com/userData");
-  }, []);
-
-```
-####
-useEffect() => takes 2 parameter: 
-+ callback function() => which react(useeffect decides when to call it),
-+ Dependency array => this is parameter on which the UseEffect() hook is dependent which besically deifines the how frequently call the useEffect() hook.
-
-#### Note: 
-- if Dependency Array is empty => Component Renders One and UseEffect() also called One time After 1st render.
-- if Dependency Array is Filled => Component Renders One and UseEffect() called as frequently as the passing parameter or text changes. Suppose we passed `searchText` in dependency array then it called `1 + onEvery Key Press`.
-- if we does not pass Dependency Array then it calls on every render of the that component where it presents.
-
-
-### indside {} you can write any javaScript code?
-Yes, But you should have to write javaScript expression instead of javaScript statement. 
-
-### What is Optional Channing?
-### what is Shimmer UI?
-### Whatt is Differnce between JS expression and Js statement?
-
-A `expression` Any unit of code that can be evaluated to a value is an expression. Since expressions produce values, they can appear anywhere in a program where JavaScript expects a value such as the arguments of a function invocation.
-#### Example: 
-+ 10+13
-+ 10
-+ "hello" + "world"
-+ (isExpression)?"Yes":"No"
-
-A `statement` is an instruction to perform a specific action. Such actions include creating a variable or a function, looping through an array of elements, evaluating code based on a specific condition etc. JavaScript programs are actually a sequence of statements.
-
-```
-var sum;
-var average;
-var total = 0;
-// A function declaration statement 
-function greet(message) {
-  console.log(message);
-}
-```
-
-For More Information about expression vs statement [Medium Link](https://medium.com/launch-school/javascript-expressions-and-statements-4d32ac9c0e74)
-
-
-### What is Conditional Rendering, Explain with a code Example.
-Your components will often need to display different things depending on different conditions. In React, you can conditionally render JSX using JavaScript syntax like if statements, &&, and ? : operators.
-
-```
-function Item({ name, isPacked }) {
-  if (isPacked) {
-    return <li className="item">{name} ✔</li>;
+const appRouter = createBrowserRouter([
+  {
+    path:"/",
+    Element: <AppLayout />
+  },
+  {
+    path:"/about",
+    Element: <About />
   }
-  return <li className="item">{name}</li>;
+])
+
+
+// now this wouldn't work because we need to provide: 
+
+import { RouterProvider } from "react-router-dom";
+
+this is componet which takes router configuration `appRouter` and provides it to react.
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<RouterProvider router={appRouter} />);
+
+// Now root will render all component which RouterProvider config is provides.
+```
+***
+### How to setup wildcraft route for error page?
+
+you can provide defalt configuration with error component using the `useRouterError()` Hook;
+```
+import { useRouteError } from "react-router-dom";
+
+const Error = () =>{
+
+    const err = useRouteError();
+    console.log(err);
+    return (
+        <>
+            <h3>Opps!!</h3>
+            <h4>Something Went wrong!!</h4>
+            <h4>{err.data}</h4>
+            <h5>{err.status + " " + err.statusText}</h5>
+        </>
+    )
 }
 
-export default function PackingList() {
+export default Error;
+
+
+const appRouter = createBrowserRouter([
+  {
+    path:"/",
+    element: <AppLayout />,
+    errorElement: <Error />   //this is configuration 
+  },
+  {
+    path:"/about",
+    element: <About />
+  }
+])
+```
+***
+### what is single page application (SPA)? 
+A single page application doesn't make network call when we change page. Or it not refersh the page.
+for navigating between page onClick the react-router-dom provides `Link` work as:
+
+```
+ <a href="/about">about</a>
+
+<Link to="/about">about</Link>
+
+```
+***
+### How to create nested route?
+```
+const AppLayout = () => {
   return (
-    <section>
-      <h1>Sally Ride's Packing List</h1>
-      <ul>
-        <Item 
-          isPacked={true} 
-          name="Space suit" 
-        />
-        <Item 
-          isPacked={true} 
-          name="Helmet with a golden leaf" 
-        />
-        <Item 
-          isPacked={false} 
-          name="Photo of Tam" 
-        />
-      </ul>
-    </section>
+    <>
+      <Header />
+      <Outlet />   // fill all nested componet provided
+      <Footer />   // by childern configuration
+    </>
   );
+};
+
+const appRouter = createBrowserRouter([
+  {
+    path:"/",
+    element: <AppLayout />,
+    errorElement: <Error />,
+    children:[
+      {
+        path:"/",
+        element: <Body />
+      },
+      {
+        path:"/about",
+        element: <About />
+      },
+      {
+        path:"/contact",
+        element: <Contact />
+      }
+    ]
+  },
+ 
+])
+
+//show more nested: http://localhost:1234/contact/about
+
+const appRouter = createBrowserRouter([
+  {
+    path:"/",
+    element: <AppLayout />,
+    errorElement: <Error />,
+    children:[
+      {
+        path:"/",
+        element: <Body />
+      },
+      {
+        path:"/contact",
+        element: <Contact />,
+        children:[
+          {
+            path:"contact/about",
+            element: <About />
+          }
+        ]
+      }
+    ]
+  },
+])
+```
+***
+### How to implement dynamic routes? 
+Router Configuration 
+```
+const appRouter = createBrowserRouter([
+  {
+    path:"/",
+    element: <AppLayout />,
+    errorElement: <Error />,
+    children:[
+      {
+        path:"/",
+        element: <Body />
+      },
+      {
+        path:"/restaurent/:id",
+        element: <RestaurentMenu />
+      }
+    ]
+  },
+])
+
+
+//component: 
+import { useParams } from "react-router-dom";
+
+const RestaurentMenu = () =>{
+    const param = useParams();
+    return (
+        <div>
+            <h2>ResTaurent Name:  </h2>
+            <h2>Restuaren Id : {param.id}</h2>
+        </div>
+    )
 }
+export default RestaurentMenu;
 ```
-#### 
-In some situations, you won’t want to render anything at all. For example, say you don’t want to show packed items at all. A component must return something. In this case, you can return null:
+***
+#### NOte: 
+`useParams()` is hook that provide the feature to access the params provided in routes(Id or any param)
+
+### how to convert the objects into array of Object (Object.values(restaurent.menu.items))?
+The Object.values() static method returns an array of a given object's own enumerable string-keyed property values.
 ```
-if (isPacked) {
-  return null;
-}
-return <li className="item">{name}</li>;
+const object1 = {
+  a: 'somestring',
+  b: 42,
+  c: false
+};
+
+console.log(Object.values(object1));
+// Expected output: Array ["somestring", 42, false]
 ```
-### What is CORS?
-Cross-Origin Resource Sharing (CORS) is an HTTP-header based mechanism that allows a server to indicate any origins (domain, scheme, or port) other than its own from which a browser should permit loading resources. CORS also relies on a mechanism by which browsers make a "preflight" request to the server hosting the cross-origin resource, in order to check that the server will permit the actual request. In that preflight, the browser sends headers that indicate the HTTP method and headers that will be used in the actual request.
 
-An example of a cross-origin request: the front-end JavaScript code served from https://domain-a.com uses XMLHttpRequest to make a request for https://domain-b.com/data.json.
+***
+### What is the various way to add images to our app? Explain with code Example?
+The two common way of adding image are: 
++ CDN :
+```
+<img className="logo" src="https://image.url" alt="Logo" />
+```
++ From assests (Local folder): 
+```
+import logo from "../assets/foodvillalogo.png";
+<img className="logo" src={logo} alt="Logo" />
+```
+### what would be happens if we console.log(useState());
+***
+### How useEffect() behaves if we don't add dependency array?
+The default behaviour of `useEffect()` is called after every render and this follows the same. It will call after each render.
 
-![See Image](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/cors_principle.png)
-### What is async and await?
+***
+### What is difference between client side routing and server side routing?
+#### Server-side
+- When browsing, the adjustment of a URL can make a lot of things happen. This will happen regularly by clicking on a link, which in turn will request a new page from the server. This is what we call a server-side route. A whole new document is served to the user.
 
-The async function declaration declares an async function where the await keyword is permitted within the function body. The async and await keywords enable asynchronous, promise-based behavior to be written in a cleaner style, avoiding the need to explicitly configure promise chains.
+- A server-side request causes the whole page to refresh. This is because a new GET request is sent to the server which responds with a new document, completely discarding the old page altogether.
 
-[async await error Handling](https://itnext.io/error-handling-with-async-await-in-js-26c3f20bc06a)
+##### Pros
+- A server-side route will only request the data that’s needed. No more, no less.
+Because server-side routing has been the standard for a long time, search engines are optimised for webpages that come from the server.
+##### Cons
+- Every request results in a full-page refresh. That means that unnecessary data is being requested. A header and a footer of a webpage often stays the same. This isn’t something you would want to request from the server again.
+- It can take a while for the page to be rendered. However, this is only the case when the document to be rendered is very large or when you have slow internet speed.
+#### Client-side
+- A client-side route happens when the route is handled internally by the JavaScript that is loaded on the page. When a user clicks on a link, the URL changes but the request to the server is prevented. The adjustment to the URL will result in a changed state of the application. The changed state will ultimately result in a different view of the webpage. This could be the rendering of a new component, or even a request to a server for some data that the application will turn into some HTML elements.
 
-### What is the use od `const json = await data.json()` in `getRestaurent()`?
-If we do not use await here then javaScript quick complete it's execution and we would not able to get the actual data returned by the API and this will produces erroe. We only get a promise object which have details about the call but not a full response you can say you will receive only partial information.
+- It is important to note that the whole page won’t refresh when using client-side routing. There are just some elements inside the application that will change.
+
+##### Pros
+- Because less data is processed, routing between views is generally faster.
+- Smooth transitions and animations between views are easier to implement.
+##### Cons
+- The whole website or web-application needs to be loaded on the first request. That’s why the initial loading time usually takes longer.
+- Because the whole website or web-application is loaded initially, there is a possibility that there is data downloaded for views you won’t even come across.
+- It requires more setup work or even a library. Because server-side is the standard, extra code must be written to make client-side routing possible.
+- Search engine crawling is less optimised. Google is making good progress on crawling single-paged-apps, but it isn’t nearly as efficient as server-side routed websites.
+
+***
