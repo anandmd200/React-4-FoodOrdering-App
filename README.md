@@ -1,261 +1,241 @@
-# React-7-FoodOrdering-App (Routing)
-## React Router DOM 
-It is a very popular plugin which is used for client side routing in react application.
-#### Note:
-- Never create a component. You can compose it if required.
-- Never write useState() inside conditional (if-else statement).Because useState() creates it's own variable if you put state inside if-else react would not know whether the state variable is created or not and it will leads to the inconsistency.
-- Never write useState() inside for loop. Even it would not required in future :)
-- useState() is a hook that react gives you to create local state variable inside component So Never declare useState() outside of your componet.
-- In enterprise App the images kept on CDN in a optimised way because it deleivers the images very fast.
-- don't import packages for small things, Improt when things gets more complecated.
-- `formic` is a pliwhich used to create the complex form like `forms in Finacial Domain or Something else`.
-[formic Create forms without tears](https://formik.org/docs/overview)
+# React-8-Let's Get classy (calss Based Component and LifeCycle)
 
-***
-### Can we create more useEffect inside component?
-Yes you can! As per the requirement or usecases.
 
-***
-### How to setup routes in project explain?
-install router Package: 
+### Note
+- React uses one object to manage the all states  both in (Functional and Class).
 ```
-npm install react-router-dom
+    const [count]  = useState(0);
+    const [count2] = useState(0);
+
+    this.state = {
+        count : 0,
+        count2: 0
+    }
+
+``` 
+- Do not mutate state directily use Proper set Statement: 
 ```
-Now in App.js file:
+<button onClick={()=>{
+                   
+    this.setState({
+        count:1,
+        })
+}}>SetCount</button>
 
+<button onClick={()=>{
+    setCount(1);
+}}>Setcout</button>
 ```
-import { createBrowserRouter } from "react-router-dom";
+- useEffect is best place to call API because it component 1st renders then it calls useEffect and the update the view.
+- Similarly in class Based Component there is something called `componentDidMount()` which has same behaviour as useEffect.
 
-//now need setup some routerconfiguration: 
+### How to create ClassBased Component and How get access of props inside class based component Vs funtional based component? 
 
-const appRouter = createBrowserRouter([
-  {
-    path:"/",
-    Element: <AppLayout />
-  },
-  {
-    path:"/about",
-    Element: <About />
-  }
-])
-
-
-// now this wouldn't work because we need to provide: 
-
-import { RouterProvider } from "react-router-dom";
-
-this is componet which takes router configuration `appRouter` and provides it to react.
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<RouterProvider router={appRouter} />);
-
-// Now root will render all component which RouterProvider config is provides.
+Passing Props both in functional and class based Components: 
 ```
-***
-### How to setup wildcraft route for error page?
-
-you can provide defalt configuration with error component using the `useRouterError()` Hook;
-```
-import { useRouteError } from "react-router-dom";
-
-const Error = () =>{
-
-    const err = useRouteError();
-    console.log(err);
-    return (
-        <>
-            <h3>Opps!!</h3>
-            <h4>Something Went wrong!!</h4>
-            <h4>{err.data}</h4>
-            <h5>{err.status + " " + err.statusText}</h5>
-        </>
-    )
-}
-
-export default Error;
-
-
-const appRouter = createBrowserRouter([
-  {
-    path:"/",
-    element: <AppLayout />,
-    errorElement: <Error />   //this is configuration 
-  },
-  {
-    path:"/about",
-    element: <About />
-  }
-])
-```
-***
-### what is single page application (SPA)? 
-A single page application doesn't make network call when we change page. Or it not refersh the page.
-for navigating between page onClick the react-router-dom provides `Link` work as:
-
-```
- <a href="/about">about</a>
-
-<Link to="/about">about</Link>
-
-```
-***
-### How to create nested route?
-```
-const AppLayout = () => {
-  return (
-    <>
-      <Header />
-      <Outlet />   // fill all nested componet provided
-      <Footer />   // by childern configuration
-    </>
-  );
-};
-
-const appRouter = createBrowserRouter([
-  {
-    path:"/",
-    element: <AppLayout />,
-    errorElement: <Error />,
-    children:[
-      {
-        path:"/",
-        element: <Body />
-      },
-      {
-        path:"/about",
-        element: <About />
-      },
-      {
-        path:"/contact",
-        element: <Contact />
-      }
-    ]
-  },
- 
-])
-
-//show more nested: http://localhost:1234/contact/about
-
-const appRouter = createBrowserRouter([
-  {
-    path:"/",
-    element: <AppLayout />,
-    errorElement: <Error />,
-    children:[
-      {
-        path:"/",
-        element: <Body />
-      },
-      {
-        path:"/contact",
-        element: <Contact />,
-        children:[
-          {
-            path:"contact/about",
-            element: <About />
-          }
-        ]
-      }
-    ]
-  },
-])
-```
-***
-### How to implement dynamic routes? 
-Router Configuration 
-```
-const appRouter = createBrowserRouter([
-  {
-    path:"/",
-    element: <AppLayout />,
-    errorElement: <Error />,
-    children:[
-      {
-        path:"/",
-        element: <Body />
-      },
-      {
-        path:"/restaurent/:id",
-        element: <RestaurentMenu />
-      }
-    ]
-  },
-])
-
-
-//component: 
-import { useParams } from "react-router-dom";
-
-const RestaurentMenu = () =>{
-    const param = useParams();
+import ProfileClassComponent from "./ProfileClass"
+import Profile from "./Profile";
+const About = () => {
     return (
         <div>
-            <h2>ResTaurent Name:  </h2>
-            <h2>Restuaren Id : {param.id}</h2>
+            <Profile  name={"Anand Kumar"}/>
+            <ProfileClassComponent name={"Anand Kumar"} />
         </div>
-    )
+    );
 }
-export default RestaurentMenu;
+export default About;
 ```
-***
-#### NOte: 
-`useParams()` is hook that provide the feature to access the params provided in routes(Id or any param)
-
-### how to convert the objects into array of Object (Object.values(restaurent.menu.items))?
-The Object.values() static method returns an array of a given object's own enumerable string-keyed property values.
+Receiving in class based Component: 
 ```
-const object1 = {
-  a: 'somestring',
-  b: 42,
-  c: false
-};
+import React from "react";
 
-console.log(Object.values(object1));
-// Expected output: Array ["somestring", 42, false]
+class Profile extends React.Component {
+    render(){
+        return (
+            <div>
+                <br />
+                <h3>Profile Class Component</h3>
+                {console.log(this.props.name)}
+                <p>Degination: Colemine</p>
+            </div>
+        )
+    }
+}
+export default Profile;
+```
+Receiveing in Functional Based Component: 
+
+```
+const Profile = (props) =>{
+    return (
+        <div>
+            <br />
+            <h3>Profile Functional Component</h3>
+            <p>Name: {props.name}</p>
+            <p>UserName: AnandMd2001</p>
+            <p>Email:anandmd@gmail.com </p>
+        </div>
+    );
+}
+export default Profile;
 ```
 
-***
-### What is the various way to add images to our app? Explain with code Example?
-The two common way of adding image are: 
-+ CDN :
+### what is `this` inside class based components? 
+The ‘this’ keyword typically references a JavaScript element depending on the scope or context of its use.
+####
+See, if this key word used in normal console the it points to the Global `window` object of the browser.
+
+But here(in ClassBased Component) it's pointing the properties of the class.Means it is accessable as the global object of the class.
+And we can access every props or other object using `this`.
+[Medium Reference](https://medium.com/byte-sized-react/what-is-this-in-react-25c62c31480)
+
+### why do we use `super(props)` inside constructor? 
+
+`constructor` It is a best place of initialization. And when the class is invoked or instantiated the constructor is called first.
+
+- And this is best place of creating state variable.
+
+### what is single Class Based component exectution sequence.
 ```
-<img className="logo" src="https://image.url" alt="Logo" />
+
+class Profile extends React.Component {
+
+    constructor(props){
+        super(props);
+        console.log("constructer");
+    }
+    componentDidMount(){
+        console.log("ComponentDidMount");
+    }
+    render(){
+        return (
+            {console.log("render")}
+        )
+    }
+}
+
 ```
-+ From assests (Local folder): 
+
+Sequence :
++ Constustor 
++ Render
++ ComponentDidMount
+
+### In context of Parent and child relationship component execution sequence?
+
++ Parent constructure-parent
++ Parent render-parent
+    + Child constructer
+    + Child render
+    + Child ComponentDidMount
++ Parent ComponentDidMount
+
+
+
+### what would be exectution sequence among parent, first-child and Second-child at same lavel? 
+- Parent - constructure
+- Parent-Render
+- -  First-Child Constructor
+- -  First-Child Render
+- - - Second-Child Constructor
+- - - Second-Child Render
+- - First-Child ComponentDitMount
+- - - Second-Child ComponentDitMount
+- Parent -ComponentDidMount
+
+
+### Explain about the phases of React LifeCycle?
+
+[React LifeCycle Diagram](https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
+
+There are two Phases defined: 
++ Render Phase (Render the component on every State or Props Changes) = [constructor + Render]
++ Commit Phase (Upadate the DOM with latest changes) =[componentDidMount]
+
+### which phase is fast render or Commit phase?
+Updating DOM is a expensive process So render is fast to commit phases.
+
+
+### why would we see delay in child-componentDidMount when we are performing API call in side async componentDidMount? 
+- Parent - constructure
+- Parent-Render
+  - - First-Child Constructor
+  - - First-Child Render
+    
+    Render Phase ends!
+
+    Commit Phase Start: 
+    API CALL Performs  => this API call takes some time and The child-ComponentDidMount function is async so React(js) not waits for it. and Parent - componentDidMount is called.
+
+- Parent -ComponentDidMount
+
+Now data is logs: 
+{login: 'anandmd200', id: 80383762, node_id: 'MDQ6VXNlcjgwMzgzNzYy', avatar_url: 'https://avatars.githubusercontent.com/u/80383762?v=4', gravatar_id: '', …}
+- - First-ChildComponentDid Mount
+- - `First-Child Render (Again)` this re-render cycle after Data Fetched and state changes known as `Updating`  
+
+
+### when componentDidUpdate is called? 
+it is called after every render for updating phase when API has been called (componentDidMount Executions ends) and it will render DOM and updates the chnages into the UI.
+
+### Note: 
+- After 1st render the `componentDidMount` is Called only once.
+- when components already mounted then after every render only `componentDidUpdate` is called,and componentDidMount is not called.
+- `ComponentWillUnmount` called when we chnage the page or switch the routes.
+
+
+### componentDidUpdate() is a life cycle method which is called after every render, then how will you write code so that it will run when ever the state changes? 
+
 ```
-import logo from "../assets/foodvillalogo.png";
-<img className="logo" src={logo} alt="Logo" />
+    componentDidUpdate(prevProps, prevState){
+        if(this.state.count !== prevState.count || this.state.count2 !== prevState.count2){
+            //do something 
+        }
+        console.log("Component-did-Update is called");
+    }
+
+    IS EQUIVALENT TO
+
+    useEffect(()=>{
+       //do something
+
+    },[count,count2])
+
 ```
-### what would be happens if we console.log(useState());
-***
-### How useEffect() behaves if we don't add dependency array?
-The default behaviour of `useEffect()` is called after every render and this follows the same. It will call after each render.
+this is why useEffect takes dependency array because in classbased component it useto be very difficult to manage.
 
-***
-### What is difference between client side routing and server side routing?
-#### Server-side
-- When browsing, the adjustment of a URL can make a lot of things happen. This will happen regularly by clicking on a link, which in turn will request a new page from the server. This is what we call a server-side route. A whole new document is served to the user.
+### why `componentWillUnmount()` is important and how it's cleanup the code? 
+It is called when we chnage the pages at this time we need to clen-up things which is un-neccessarly excutes even the page has changed. e.g, setInterval(), rxjs subscribe(), So it is required to cleanInterval and unsubscribe the things. If you are not clean things up there are a lots of `Performance Loss` going on.
 
-- A server-side request causes the whole page to refresh. This is because a new GET request is sent to the server which responds with a new document, completely discarding the old page altogether.
 
-##### Pros
-- A server-side route will only request the data that’s needed. No more, no less.
-Because server-side routing has been the standard for a long time, search engines are optimised for webpages that come from the server.
-##### Cons
-- Every request results in a full-page refresh. That means that unnecessary data is being requested. A header and a footer of a webpage often stays the same. This isn’t something you would want to request from the server again.
-- It can take a while for the page to be rendered. However, this is only the case when the document to be rendered is very large or when you have slow internet speed.
-#### Client-side
-- A client-side route happens when the route is handled internally by the JavaScript that is loaded on the page. When a user clicks on a link, the URL changes but the request to the server is prevented. The adjustment to the URL will result in a changed state of the application. The changed state will ultimately result in a different view of the webpage. This could be the rendering of a new component, or even a request to a server for some data that the application will turn into some HTML elements.
+```
+Classbased component:
 
-- It is important to note that the whole page won’t refresh when using client-side routing. There are just some elements inside the application that will change.
+   componentDidMount(){
+    this.timer = setInterval(()=>{
+        console.log("Namaste React OP");
+    },1000);
+   }
 
-##### Pros
-- Because less data is processed, routing between views is generally faster.
-- Smooth transitions and animations between views are easier to implement.
-##### Cons
-- The whole website or web-application needs to be loaded on the first request. That’s why the initial loading time usually takes longer.
-- Because the whole website or web-application is loaded initially, there is a possibility that there is data downloaded for views you won’t even come across.
-- It requires more setup work or even a library. Because server-side is the standard, extra code must be written to make client-side routing possible.
-- Search engine crawling is less optimised. Google is making good progress on crawling single-paged-apps, but it isn’t nearly as efficient as server-side routed websites.
+    componentWillUnmount(){
+        clearInterval(this.timer);
+        console.log("componentwillunmount has beed called");
+    }
 
-***
+Funtional Component: 
+
+    useEffect(()=>{
+       const timer = setInterval(()=>{
+        console.log("React is OP");
+       },1000)
+        console.log("useEffect");
+
+       return() => {              -------------> unmouting phase for function component.
+        clearInterval(timer);
+       }
+    },[])
+    
+```
+
+### Why we can't make useEffect(async()=>{}[]) but we can make async componentDidMount()?
+ Because React's useEffect hook expects a cleanup function returned from it which is called when the component unmounts. Using an async function here will cause a bug as the cleanup function will never get called.

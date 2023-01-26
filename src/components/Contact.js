@@ -1,3 +1,5 @@
+import Profile from "./Profile";
+
 const Contact = () =>{
     return (
         <>
@@ -5,6 +7,7 @@ const Contact = () =>{
             <h4>Facebook</h4>
             <h4>Instagram</h4>
             <p>Email: Ananad@gmail.com</p>
+            <Profile name={"Anand"} />
         </>
     )
 }
