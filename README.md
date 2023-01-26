@@ -29,6 +29,7 @@
 - useEffect is best place to call API because it component 1st renders then it calls useEffect and the update the view.
 - Similarly in class Based Component there is something called `componentDidMount()` which has same behaviour as useEffect.
 
+*** 
 ### How to create ClassBased Component and How get access of props inside class based component Vs funtional based component? 
 
 Passing Props both in functional and class based Components: 
@@ -79,8 +80,8 @@ const Profile = (props) =>{
 }
 export default Profile;
 ```
-
-### what is `this` inside class based components? 
+***
+### What is `this` inside class based components? 
 The ‘this’ keyword typically references a JavaScript element depending on the scope or context of its use.
 ####
 See, if this key word used in normal console the it points to the Global `window` object of the browser.
@@ -89,13 +90,15 @@ But here(in ClassBased Component) it's pointing the properties of the class.Mean
 And we can access every props or other object using `this`.
 [Medium Reference](https://medium.com/byte-sized-react/what-is-this-in-react-25c62c31480)
 
-### why do we use `super(props)` inside constructor? 
+***
+### Why do we use `super(props)` inside constructor? 
 
 `constructor` It is a best place of initialization. And when the class is invoked or instantiated the constructor is called first.
 
 - And this is best place of creating state variable.
 
-### what is single Class Based component exectution sequence.
+***
+### What is single Class Based component exectution sequence.
 ```
 
 class Profile extends React.Component {
@@ -121,6 +124,7 @@ Sequence :
 + Render
 + ComponentDidMount
 
+***
 ### In context of Parent and child relationship component execution sequence?
 
 + Parent constructure-parent
@@ -131,8 +135,8 @@ Sequence :
 + Parent ComponentDidMount
 
 
-
-### what would be exectution sequence among parent, first-child and Second-child at same lavel? 
+***
+### What would be exectution sequence among parent, first-child and Second-child at same lavel? 
 - Parent - constructure
 - Parent-Render
 - -  First-Child Constructor
@@ -143,7 +147,7 @@ Sequence :
 - - - Second-Child ComponentDitMount
 - Parent -ComponentDidMount
 
-
+***
 ### Explain about the phases of React LifeCycle?
 
 [React LifeCycle Diagram](https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
@@ -152,10 +156,11 @@ There are two Phases defined:
 + Render Phase (Render the component on every State or Props Changes) = [constructor + Render]
 + Commit Phase (Upadate the DOM with latest changes) =[componentDidMount]
 
-### which phase is fast render or Commit phase?
+***
+### Which phase is fast render or Commit phase?
 Updating DOM is a expensive process So render is fast to commit phases.
 
-
+***
 ### why would we see delay in child-componentDidMount when we are performing API call in side async componentDidMount? 
 - Parent - constructure
 - Parent-Render
@@ -174,8 +179,8 @@ Now data is logs:
 - - First-ChildComponentDid Mount
 - - `First-Child Render (Again)` this re-render cycle after Data Fetched and state changes known as `Updating`  
 
-
-### when componentDidUpdate is called? 
+***
+### When componentDidUpdate is called? 
 it is called after every render for updating phase when API has been called (componentDidMount Executions ends) and it will render DOM and updates the chnages into the UI.
 
 ### Note: 
@@ -183,8 +188,8 @@ it is called after every render for updating phase when API has been called (com
 - when components already mounted then after every render only `componentDidUpdate` is called,and componentDidMount is not called.
 - `ComponentWillUnmount` called when we chnage the page or switch the routes.
 
-
-### componentDidUpdate() is a life cycle method which is called after every render, then how will you write code so that it will run when ever the state changes? 
+***
+### ComponentDidUpdate() is a life cycle method which is called after every render, then how will you write code so that it will run when ever the state changes? 
 
 ```
     componentDidUpdate(prevProps, prevState){
@@ -204,7 +209,8 @@ it is called after every render for updating phase when API has been called (com
 ```
 this is why useEffect takes dependency array because in classbased component it useto be very difficult to manage.
 
-### why `componentWillUnmount()` is important and how it's cleanup the code? 
+***
+### Why `componentWillUnmount()` is important and how it's cleanup the code? 
 It is called when we chnage the pages at this time we need to clen-up things which is un-neccessarly excutes even the page has changed. e.g, setInterval(), rxjs subscribe(), So it is required to cleanInterval and unsubscribe the things. If you are not clean things up there are a lots of `Performance Loss` going on.
 
 
@@ -236,6 +242,8 @@ Funtional Component:
     },[])
     
 ```
-
+***
 ### Why we can't make useEffect(async()=>{}[]) but we can make async componentDidMount()?
  Because React's useEffect hook expects a cleanup function returned from it which is called when the component unmounts. Using an async function here will cause a bug as the cleanup function will never get called.
+
+ ***
