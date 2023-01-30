@@ -3,17 +3,14 @@ import RestaurantCard from "./RestaurantCard";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import { filterData } from "../Utils/helper";
+import useOnline from "../Utils/useOnline";
 
 const Body = () => {
   const [searchText, setSearchText] = useState("");
   const [filterRestaurants, setFilterRestaurant] = useState([]);
   const [allReataurents, setAllRestauren] = useState([]);
 
-  function searchResturant(searchText, restaurants) {
-    return restaurants.filter((restaurant) =>
-      restaurant?.data?.name?.toLowerCase()?.includes(searchText.toLowerCase())
-    );
-  }
 
   async function getRestaurantList() {
     const data = await fetch(
@@ -27,15 +24,14 @@ const Body = () => {
 
   useEffect(() => {
     getRestaurantList()
-    // .catch(console.error)
-    // .then(console.log("we are cleanup here"));
   }, []);
 
-  console.log("render");
+  const isonline = useOnline();
 
-  //early return;
+  if(!isonline){
+    return <h1>You are offline, Please check your internet connection!!</h1>
+  }
 
-  // if (allReataurents.length === 0) return <h1>No Restaurent found</h1>;
 
   return allReataurents.length === 0 ? (
       <Shimmer />
@@ -54,7 +50,7 @@ const Body = () => {
         <button
           className="search-btn"
           onClick={() => {
-            let result = searchResturant(searchText, allReataurents);
+            let result = filterData(searchText, allReataurents);
             setFilterRestaurant(result);
           }}
         >
