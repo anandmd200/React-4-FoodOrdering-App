@@ -1,4 +1,4 @@
-# React-9-Tailwind-CSS
+# React-10-Tailwind-CSS
 
 
 ### Note
@@ -31,7 +31,7 @@ npx tailwindcss init
   }
 }
 ```
-- Now Create tailwind.config.js file and add configuration: 
+- Now Create `tailwind.config.js` file and add configuration: 
 ```
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -44,14 +44,14 @@ module.exports = {
   plugins: [],
 }
 ```
-- In the last step add the imports inside index.css 
+- In the last step add the imports inside `index.css` 
 ```
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 ```
 
-- Refere the below links for more info about tailwind.config.js file: 
-[content](https://tailwindcss.com/docs/content-configuration)
-[Theme](https://tailwindcss.com/docs/theme)
-[Plugins](https://tailwindcss.com/docs/plugins)
+- Refere the below links for more info about `tailwind.config.js` file: 
++ [content](https://tailwindcss.com/docs/content-configuration)
++ [Theme](https://tailwindcss.com/docs/theme)
++ [Plugins](https://tailwindcss.com/docs/plugins)
