@@ -37,10 +37,10 @@ const Body = () => {
       <Shimmer />
   ) : (
     <>
-      <div className="search-container">
+      <div className="flex justify-center mt-2">
         <input
           type="text"
-          className="search-input"
+          className="border-solidborder-solid border-2 border-pink-200 px-5 rounded-md"
           placeholder="Seach here"
           value={searchText}
           onChange={(e) => {
@@ -48,7 +48,7 @@ const Body = () => {
           }}
         />
         <button
-          className="search-btn"
+          className="bg-pink-400 p-2 mx-2 w-35 rounded-md"
           onClick={() => {
             let result = filterData(searchText, allReataurents);
             setFilterRestaurant(result);
@@ -58,7 +58,7 @@ const Body = () => {
         </button>
         <p>{searchText}</p>
       </div>
-      <div className="resturant-list">
+      <div className="flex flex-wrap justify-center m-4">
         {/* Turnary Oprator to handle empty case when no searchText Found */
           
           filterRestaurants.length === 0 ? (
@@ -66,7 +66,7 @@ const Body = () => {
         ) : (
           filterRestaurants.map((Element) => {
             return<Link to={"/restaurent/"+Element.data.id} key={Element.data.id}>
-            <RestaurantCard {...Element.data} />;
+            <RestaurantCard {...Element.data} />
             </Link> 
           })
         )}
