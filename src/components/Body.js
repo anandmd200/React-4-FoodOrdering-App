@@ -6,11 +6,10 @@ import { Link } from "react-router-dom";
 import { filterData } from "../Utils/helper";
 import useOnline from "../Utils/useOnline";
 
-const Body = () => {
+const Body = ({ user }) => {
   const [searchText, setSearchText] = useState("");
   const [filterRestaurants, setFilterRestaurant] = useState([]);
   const [allReataurents, setAllRestauren] = useState([]);
-
 
   async function getRestaurantList() {
     const data = await fetch(
@@ -23,18 +22,17 @@ const Body = () => {
   }
 
   useEffect(() => {
-    getRestaurantList()
+    getRestaurantList();
   }, []);
 
   const isonline = useOnline();
 
-  if(!isonline){
-    return <h1>You are offline, Please check your internet connection!!</h1>
+  if (!isonline) {
+    return <h1>You are offline, Please check your internet connection!!</h1>;
   }
 
-
   return allReataurents.length === 0 ? (
-      <Shimmer />
+    <Shimmer />
   ) : (
     <>
       <div className="flex justify-center mt-2">
@@ -59,17 +57,24 @@ const Body = () => {
         <p>{searchText}</p>
       </div>
       <div className="flex flex-wrap justify-center m-4">
-        {/* Turnary Oprator to handle empty case when no searchText Found */
-          
+        {
+          /* Turnary Oprator to handle empty case when no searchText Found */
+
           filterRestaurants.length === 0 ? (
-          <h1>No filted match found</h1>
-        ) : (
-          filterRestaurants.map((Element) => {
-            return<Link to={"/restaurent/"+Element.data.id} key={Element.data.id}>
-            <RestaurantCard {...Element.data} />
-            </Link> 
-          })
-        )}
+            <h1>No filted match found</h1>
+          ) : (
+            filterRestaurants.map((Element) => {
+              return (
+                <Link
+                  to={"/restaurent/" + Element.data.id}
+                  key={Element.data.id}
+                >
+                  <RestaurantCard {...Element.data} user={user} />
+                </Link>
+              );
+            })
+          )
+        }
       </div>
     </>
   );

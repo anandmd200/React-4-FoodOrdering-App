@@ -17,7 +17,7 @@ const RestaurentMenu = () => {
     <div className="flex m-2 justify-center  ">
       <div className="text-center">
         <h1 className="text-lg font-bold">Restauren Name</h1>
-        <div className="rounded-lg w-80 text-center border-solid border-2 border-pink-100">
+        <div className="w-80border-solid border-2 border-pink-100  shadow-sm rounded-lg text-center bg-pink-10">
           <img
             className="Restaurent_image rounded-lg"
             src={image_CDN + restaurent.cloudinaryImageId}
@@ -33,9 +33,9 @@ const RestaurentMenu = () => {
         <h1 className="text-lg font-bold">Menus</h1>
         <ul className="max-w-20">
           {Object.values(restaurent?.menu?.items).map((item, i) =>
-            i <= 4 ? (
+            i <= 9 ? (
               <li
-                className="list-decimal border-solid border-2 border-pink-100 p-3 m-2 rounded-lg "
+                className="list-decimal  shadow-sm text-center bg-pink-10 border-solid border-2 border-pink-100 p-3 m-2 rounded-lg "
                 key={item.id}
               >
                 {item.name}
